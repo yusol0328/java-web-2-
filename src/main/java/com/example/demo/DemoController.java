@@ -22,4 +22,5 @@ public class DemoController {
         model.addAttribute("today", "2026-09-01");
         return "hello2"; // hello2.html 연결
     }
+
 }
