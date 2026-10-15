@@ -21,7 +21,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth // 1. URL 접근 규칙 (인가)
                         .requestMatchers("/", "/hello", "/detailed_web.html",
-                                "/login", "/signup", "/error")
+                                "/login", "/signup", "/error", "/detailed_ai.html", "/detailed_security.html", "/detailed_game.html")
                         .permitAll()
                         .requestMatchers("/css/**", "/js/**", "/images/**", "/fonts/**").permitAll()
                         .anyRequest().authenticated())

@@ -48,7 +48,16 @@ URL 매핑과 컨트롤러 추가하기
 2. URL 접근 방식의 차이 알기 (일반 페이지 요청 / 컨트롤러)
 
 ### 연습문제 
-1. 프로필 수정하기 (하위 페이지 추가, 자신의 색으로 물들이기)
-    - 해야 함
+1. 프로필 수정하기 (하위 페이지 추가)
+    - detailed_ai.html과 detailed_game.html, detailed_security.html을 추가로 삽입하여 하위 페이지를 늘렸다. 
+<img src="images/assignment/자바_3주차_1.png" width="400">
+<img src="images/assignment/자바_3주차_2.png" width="400">
+<img src="images/assignment/자바_3주차_3.png" width="400">
 2. 성능 확인(원인 분석)
-    - 해야 함
+    - Lighthouse 성능 분석을 통해 Pc/모바일에서의 결과를 비교해 보았다.
+    - PC/모바일 모두 가장 성능을 감소시킨 항목은 Performance였고, 두 번째로 감소시킨 항목은 SEO였다. 
+    - PC 
+        <img src="images/assignment/자바_3주차_5.png" width="400">
+    - 모바일 
+        <img src="images/assignment/자바_3주차_4.png" width="400">
+    - 둘의 성능에 차이가 나는 이유는 모바일 테스트는 느린 4G 및 CPU감속이 걸렸기 때문이고, 데스크탑은 그렇지 않았기 때문으로 비춰진다. 
