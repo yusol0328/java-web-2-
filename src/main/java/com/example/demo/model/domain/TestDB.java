@@ -12,4 +12,8 @@ public class TestDB {
     private Long id;
     @Column(nullable = true) // 테이블의 컬럼 설정 값을 명시
     private String name;
+    @Column(nullable = true)
+    private Long age;
+    @Column(nullable = true)
+    private String gender;
 }
