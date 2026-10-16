@@ -21,7 +21,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth // 1. URL 접근 규칙 (인가)
                         .requestMatchers("/", "/hello", "/detailed_web.html",
-                                "/login", "/signup", "/error", "/detailed_ai.html", "/detailed_security.html", "/detailed_game.html", "/testdb")
+                                "/login", "/signup", "/error", "/detailed_ai.html", "/detailed_security.html", "/detailed_game.html")
                         .permitAll()
                         .requestMatchers("/css/**", "/js/**", "/images/**", "/fonts/**").permitAll()
                         .anyRequest().authenticated())
@@ -29,7 +29,18 @@ public class SecurityConfig {
                         .loginPage("/login")
                         .defaultSuccessUrl("/")
                         .failureUrl("/login?error")
-                        .permitAll());
+                        .permitAll())
+
+                .logout(logout -> logout // 3. 로그아웃 설정
+                        .logoutUrl("/logout") // 로그아웃 처리 URL (POST)
+                        .logoutSuccessUrl("/login?logout") // 로그아웃 후 이동
+                        .invalidateHttpSession(true) // 세션 삭제
+                        .deleteCookies("JSESSIONID", "remember-me")) // 쿠키 삭제
+
+                .rememberMe(remember -> remember // 4. 로그인 상태 유지 
+                        .key("portfolio-remember-key") // 비밀키 (고정 문자열)
+                        .tokenValiditySeconds(60 * 60 * 24 * 7)); // 7일
+                
         return http.build();
     }
 }
