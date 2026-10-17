@@ -110,3 +110,42 @@ URL 매핑과 컨트롤러 추가하기
     - DB에는 설정되지 않도록 했다. 
         <img src="images/assignment/자바_5주차_6.png" width="400">
 
+
+## 6주차 | 권한 관리 및 관리자 페이지 
+
+### 실행 내용
+1. 용도에 따른 권한을 나누고(User, Manager, Admin), 권한에 따라 접근할 수 있는 페이지를 구분했다. (접근 제어)
+2. 관리자의 페이지를 별도로 분리하여 기능이 관리자에 한할 수 있도록 추가적인 설정을 더했다. 
+
+### 학습 기록
+1. SecurityConfig에서 hasRole("ADMIN")을 이용하여 일반 user가 회원관리 페이지에 들어가면 403으로 막히도록 설정했다. 
+    - user의 회원관리 페이지 접근 권한 X 
+        <img src="images/assignment/자바_6주차_1.png" width="400">
+2. /mypage는 Principal로 아이디를 받아 findByUsername으로 회원 정보를 조회해 보여준다. 메뉴는 sec:authorize로 로그인했을 때만 보이게 했다.  
+    - 내 정보 페이지(USER)
+        <img src="images/assignment/자바_6주차_2.png" width="400">
+    - ADMIN 배지 표시 
+        <img src="images/assignment/자바_6주차_3.png" width="400">
+3. 회원관리 페이지를 구성했다. 권한 드롭다운과 삭제 버튼을 배치했다. @PreAuthorize("hasRole('ADMIN')")를 붙여 컨트롤러 밖에서도 한번 더 잠기도록 2차 방어를 적용했다. 
+    - 회원관리 페이지 
+        <img src="images/assignment/자바_6주차_4.png" width="400">
+
+### 연습문제 
+1. 관리자 권한 보호 
+    - 관리자가 자기 권한을 강등시키거나 자기 계정을 삭제했을 시 관리자가 0명이 되는 문제를 막기 위해 IllegalArgumentException을 이용했다. 
+    - 관리자 권한 변경 불가 추가설정 
+        <img src="images/assignment/자바_6주차_7.png" width="400">
+    - 관리자 권한 계정 삭제 불가 추가설정 
+        <img src="images/assignment/자바_6주차_8.png" width="400">
+2. 매니저 권한 추가 
+    - 매니저 역할을 추가하고 회원관리 페이지의 드롭다운에도 옵션을 넣어 부여했다. 매니저는 회원 목록은 볼 수 있으나 회원관리 페이지에는 접근할 수 없다. 
+    - 매니저 배지 표시 
+        <img src="images/assignment/자바_6주차_5.png" width="400">
+    - 매니저 회원관리 페이지 접근 권한 x 
+        <img src="images/assignment/자바_6주차_6.png" width="400">
+3. 회원목록 메뉴도 USER에게 숨기기 
+    - sec:authorize를 index.html의 회원목록에 설정해 변경했다. 
+
+
+
+
