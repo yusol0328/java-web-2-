@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +10,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.model.domain.Member;
 import com.example.demo.model.service.MemberService;
+import com.example.demo.model.dto.MemberResponse;
+
+import com.example.demo.model.dto.RoleRequest;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin") // 모든 URL 앞에 /admin (관리자 페이지 분리)
@@ -21,6 +26,11 @@ public class AdminController {
         List<Member> members = memberService.findAll();
         model.addAttribute("members", members);
         return "admin/members"; // templates/admin/members.html (폴더 포함)
+    }
+
+    @GetMapping("/members-api") // 우리가 만든 JSON API 를 fetch 로 사용하는 회원 관리 화면
+    public String membersApi() {
+        return "admin/members-api"; // 데이터는 화면이 API 로 가져온다
     }
 
     @PostMapping("/members/{id}/role") // POST /admin/members/3/role
@@ -45,4 +55,5 @@ public class AdminController {
         }
         return "redirect:/admin/members";
     }
+
 }

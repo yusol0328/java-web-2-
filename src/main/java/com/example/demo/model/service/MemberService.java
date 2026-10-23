@@ -13,6 +13,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.Optional;
+
 @Service // 서비스 등록
 public class MemberService implements UserDetailsService {
     @Autowired
@@ -21,6 +23,11 @@ public class MemberService implements UserDetailsService {
     private PasswordEncoder passwordEncoder;
 
     public Member signup(MemberForm form) { // 회원가입
+        
+        if (isBlank(form.getUsername()) || isBlank(form.getPassword()) || isBlank(form.getName())) {
+            throw new IllegalArgumentException("아이디, 비밀번호, 이름은 필수입니다.");
+        }
+       
         if (memberRepository.existsByUsername(form.getUsername())) {
             throw new IllegalArgumentException("이미 사용 중인 아이디입니다.");
         }
@@ -31,6 +38,10 @@ public class MemberService implements UserDetailsService {
         member.setRole("USER"); // 기본 권한
         return memberRepository.save(member); // INSERT
     }
+
+    private boolean isBlank(String value) {
+        return value == null || value.isBlank();
+    } // 클래스 아래쪽
 
     // MemberService : 로그인한 아이디로 회원 조회
     public Member findByUsername(String username) {
@@ -62,7 +73,7 @@ public class MemberService implements UserDetailsService {
     }
 
     @PreAuthorize("hasRole('ADMIN')") // 관리자만 실행 가능 (2차 잠금)
-    public void changeRole(Long id, String role) { // 권한 변경
+    public Member changeRole(Long id, String role) { // 권한 변경
         if (!ROLES.contains(role)) { // 허용된 권한만
             throw new IllegalArgumentException("허용되지 않는 권한입니다 : " + role);
         }
@@ -72,7 +83,7 @@ public class MemberService implements UserDetailsService {
             throw new IllegalArgumentException("자기 자신의 권한은 변경할 수 없습니다.");
         }
         member.setRole(role);
-        memberRepository.save(member); // UPDATE (id 가 있으면 수정)
+        return memberRepository.save(member); // UPDATE (id 가 있으면 수정)
     }
 
     @PreAuthorize("hasRole('ADMIN')") // 관리자만 실행 가능 (2차 잠금)
@@ -85,7 +96,13 @@ public class MemberService implements UserDetailsService {
         memberRepository.delete(member); // DELETE
     }
 
+    public Optional<Member> findById(Long id) {
+        return memberRepository.findById(id);
+    }
+
     
 
 }
+
+
 

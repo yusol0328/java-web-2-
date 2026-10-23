@@ -55,4 +55,6 @@ public class MemberController {
         return "mypage"; // mypage.html 연결
     }
 
+    
+
 }
