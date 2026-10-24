@@ -100,6 +100,14 @@ public class MemberService implements UserDetailsService {
         return memberRepository.findById(id);
     }
 
+    //검색 메서드 추가 (8주차 연습문제)
+    public List<Member> search(String keyword) {
+        if (keyword == null || keyword.isBlank()) {
+            return findAll(); // 검색어가 없으면 전체 목록
+        }
+        return memberRepository.findByUsernameContainingOrNameContaining(keyword, keyword);
+    }
+
     
 
 }
