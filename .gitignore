@@ -33,3 +33,6 @@ build/
 ### VS Code ###
 .vscode/
 application-secret.properties
+
+### Eclipse / VS Code Java build output ###
+bin/
