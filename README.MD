@@ -29,7 +29,7 @@ URL 매핑과 컨트롤러 추가하기
 <img src="/images/assignment/자바_2주차_1.png" width="400">
 2. hello.html 링크를 수정하여 hello2.html로 이어지게 만듦 
 <img src="/images/assignment/자바_2주차_2.png" width="400">
-3. hello2.html을 작성하고, Thymeleaf(`th:text`) 문법을 이용해 컨트롤러에서 전달한 5개 속성 값을 서버 렌더링 시점에 동적으로 출력하도록 구현
+3. hello2.html을 작성하고, Thymeleaf(th:text) 문법을 이용해 컨트롤러에서 전달한 5개 속성 값을 서버 렌더링 시점에 동적으로 출력하도록 구현
 <img src="/images/assignment/자바_2주차_3.png" width="400">
 
 컨트롤러에서 뷰로 데이터를 전달하고 렌더링하는 요청 처리 흐름을 직접 실습을 통해 이해할 수 있었음.
@@ -153,18 +153,18 @@ URL 매핑과 컨트롤러 추가하기
 1. 회원 관리 REST API 만들기
     - 1단계 : 첫 API 를 만들어 JSON 응답 확인
         - 첫 API(/api/hello)를 호출한 결과, {"message": "안녕하세요, REST API!", ...} 를 확인함 
-        - <img src="/images/assignment/자바_8주차_3.png">
+        <img src="/images/assignment/자바_8주차_3.png">
     - 2단계 : 내 정보 API 만들기 (문제 1 : 비밀번호 노출)
         - 문제 1: /api/me의 응답에 패스워드가 그대로 노출됨 
-        - <img src="/images/assignment/자바_8주차_1.png">
+        <img src="/images/assignment/자바_8주차_1.png">
     - 3단계 : DTO반환으로 해결 (문제 1 : 비밀번호 노출)
         - DTO로 바꾼 뒤 id, username, name, role만 나오도록 변경 
-        - <img src="/images/assignment/자바_8주차_2.png">
+        <img src="/images/assignment/자바_8주차_2.png">
 
 2. Postman 으로 테스트하기
     - 4단계 : Postman 으로 호출하기 (문제 ② 로그인 화면 응답)
         - 포스트맨으로 /api/me를 호출하여 200 OK 를 확인 
-        - <img src="/images/assignment/자바_8주차_4.png">
+        <img src="/images/assignment/자바_8주차_4.png">
     - 5~7단계 : 관리자 API 만들기 (조회 -> 등록 -> 변경, 삭제)
         - 5단계 : 관리자 API 조회 | GET
             - 관리자 API 조회 - GET /api/admin/members (admin, 200 OK, 회원 목록)
@@ -220,8 +220,119 @@ URL 매핑과 컨트롤러 추가하기
         <img src="/images/assignment/자바_8주차_12(4).png">
 
 
+## 중간고사 시험 정리
 
+구글 문서에 따로 정리하던 내용을 정리해 옮겼습니다. 
 
+### 2주차 ppt 공부
+1. 트렌드
+   - 스프링 부트의 등장
+     - 스프링 프레임워크 1.0 (2004년, XML 기반 설정으로 진입 장벽이 높음)
+     - 스프링 부트 (2014년 등장, 작은 규모와 단순한 서블릿 관리가 핵심, 자바/JVM 위에서 실행)
+     - 자동 환경설정, 자동 빌드·리로드 같은 편의 기능 강화
+   - 전자정부 표준프레임워크 (eGov)
+     - 2010년 이후 스프링 기반 공개 (최신 5.x 버전이 존재하나 기존 4.3.x가 대부분)
+     - 국내 공공기관 웹 프로젝트 요구 기술 (자바, JSP, jQuery, eGov, 최근 스프링 부트 지원 시작)
+     - 본 수업 환경: IntelliJ/Eclipse 대신 VS Code 사용
+2. 개발 환경 설정 (실습)
+   - 새 프로젝트 만들기
+     - VS Code에서 Ctrl+Shift+P를 누르고 "spring maven" 입력
+     - 버전 4.x, 패키징 Jar, 언어 Java, 자바 버전 25 설정
+     - 필수 의존성 7가지 선택 (Spring Boot DevTools, Lombok, Spring Web, Spring Web services, Thymeleaf, Spring Data JPA, MYSQL Driver)
+     - 폴더 경로에 한글 사용 금지
+   - Maven 폴더 구조
+     - src/main/java: 루트 패키지 경로
+     - resources/static: CSS, 이미지, JS 파일을 두는 곳
+     - resources/templates: HTML 템플릿 파일을 두는 곳
+     - test: 테스트 코드 폴더
+     - pom.xml: 빌드 및 의존성 설정 파일
+3. 동작 과정과 개념
+   - Tomcat (톰캣)
+     - 스프링 부트에 내장된 WAS (Web Application Server, 동적 웹 페이지를 만들어 주는 서버)
+     - 자바 기반 동적 웹 페이지를 실행하는 오픈소스
+   - Spring 컨테이너 및 MVC 패턴
+     - 자바 객체 생성·초기화·호출·종료 관리 및 의존성 주입(DI) 제공
+     - DispatcherServlet: 프론트 컨트롤러 역할 수행 (URI 요청 전달 및 Thymeleaf 렌더링)
+     - MVC 패턴: Model(데이터 저장), View(화면 구성), Controller(흐름 제어)
+   - Thymeleaf 템플릿 엔진
+     - HTML 기반 템플릿 엔진 (레거시 JSP 대비 장점)
+     - 주요 문법: 선언 (<html xmlns:th="http://www.thymeleaf.org">), 텍스트 출력 (<span th:text="${data}"></span>), 주석 등
+4. GitHub 연동
+   - README.md 작성 후 스테이징(+, Commit, Push)을 통한 형상 관리
 
+### 3주차 ppt 공부
+1. 웹 호스팅 및 기술 스택
+   - 일반 웹 호스팅(카페24 등) vs 맞춤형(VPS, 클라우드) 환경 비교
+   - 배포 환경 구성 및 최종 견적서 작성의 중요성
+2. 개인 포트폴리오 템플릿 (실습)
+   - TemplateMo 578 (First Portfolio) 템플릿 활용 및 static/templates 폴더 구조화
+   - Thymeleaf 자원 경로 수정 (th:href, th:src, @{...} 문법 적용)
+3. 프로필 및 기술 수정
+   - Hero 섹션 내 개인 소개 및 프로필 이미지(profile.png) 연동
+   - Bootstrap Icons를 활용한 기술 스택 아이콘 교체 및 상세 페이지 연결 (target="_blank", rel="noopener noreferrer" 적용)
 
+### 4주차 ppt 공부
+1. 데이터베이스 및 MySQL 연동
+   - RDB (MySQL) 및 ORM(JPA) 개념 도입
+   - application.properties 설정 (spring.datasource.*, spring.jpa.*)
+   - VS Code MySQL 확장을 통한 DB 관리 및 SQL 템플릿 활용
+2. 계층별 패키지 구조 (MVC)
+   - controller, model/domain, model/service, model/repository 계층 분리
+   - JpaRepository를 상속받은 Repository를 통한 기본 CRUD 및 메서드 쿼리 구현
 
+### 5주차 ppt 공부
+1. 웹 보안 및 인증
+   - OWASP Top 10 주요 항목 (접근 제어 실패, 인증 실패)
+   - 비밀번호 저장: 일방향 해시 알고리즘 및 BCrypt 적용 (자동 솔트 및 느린 해시 기반 무차별 대입 방어)
+   - 세션 기반 로그인 및 Spring Security 필터 체인 구조 이해
+2. Spring Security 실습 및 구현
+   - SecurityConfig 설정: PasswordEncoder, SecurityFilterChain 정의 (permitAll(), anyRequest().authenticated(), formLogin())
+   - 회원가입(DTO, Service 암호화 처리) 및 로그인 연동 (UserDetailsService 구현)
+   - 로그아웃 설정 및 Thymeleaf 시큐리티 익스텐션 활용 (sec:authorize, sec:authentication)
+
+### 6주차 ppt 공부
+1. 권한 관리 및 인가 (Authorization)
+   - RBAC (Role-Based Access Control) 및 최소 권한 원칙
+   - URL 기반 권한 제어 (.requestMatchers("/admin/**").hasRole("ADMIN"))와 메서드 기반 보안 (@EnableMethodSecurity, @PreAuthorize)
+2. 관리자 페이지 및 예외 처리
+   - 관리자 전용 AdminController 구현 및 권한 변경·삭제 기능 (화이트리스트 기반 역할 검증)
+   - PRG 패턴 (Post-Redirect-Get) 적용 및 403 접근 거부 페이지 처리
+
+### 7주차 ppt 공부
+1. REST API 및 JSON
+   - SSR vs CSR (React/Vue) 비교 및 REST 설계 원칙 (GET, POST, PATCH, DELETE)
+   - @RestController와 객체-JSON 자동 변환
+2. API 보안 및 응답 최적화
+   - DTO(MemberResponse, RoleRequest)를 통한 민감 정보(비밀번호 해시) 노출 방지
+   - Spring Security HTTP Basic 인증 적용 및 CSRF 예외 처리 (/api/**)
+   - HTTP 상태 코드 (200 OK, 201 Created, 204 No Content, 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found) 활용
+
+## 스프링 부트 및 백엔드 이론
+
+1. 자바 및 JVM 환경
+   - Java Virtual Machine: 바이트코드 실행, JIT 컴파일, 플랫폼 독립성 및 자동 메모리 관리(GC) 제공
+   - 빌드 및 패키징: Maven 및 Gradle 기반 의존성 관리와 Jar 패키징
+2. 웹 아키텍처 및 통신
+   - 클라이언트-서버 구조: Browser -> Tomcat(WAS) -> Spring Boot -> Database 흐름
+   - 시큐리티 필터 체인: 요청이 컨트롤러에 도달하기 전 보안 필터 통과 (CSRF, 인증, 인가 검사)
+3. 데이터베이스와 ORM
+   - JPA / Hibernate: 객체와 관계형 DB 테이블 간의 매핑을 자동화하고 영속성 컨텍스트를 통해 트랜잭션 관리
+   - 커넥션 풀(HikariCP): 효율적인 데이터베이스 커넥션 관리
+
+## 스프링 부트 및 시큐리티 문법 / 용어
+
+1. 주요 어노테이션
+   - @SpringBootApplication: 스프링 부트 자동 설정 및 컴포넌트 스캔 활성화
+   - @Controller / @RestController: HTML 뷰 반환 컨트롤러와 JSON API 컨트롤러 구분
+   - @GetMapping / @PostMapping / @PatchMapping / @DeleteMapping: HTTP 요청 메서드 매핑
+   - @Entity, @Table, @Id, @GeneratedValue: JPA 엔티티 및 기본키 매핑
+   - @Autowired: 스프링 빈 의존성 주입 (DI)
+   - @PreAuthorize: 메서드 실행 전 보안 권한 검사
+2. Thymeleaf 문법
+   - th:text: 텍스트 데이터 바인딩
+   - th:href / th:src: 동적 URL 및 자원 경로 매핑 (@{...})
+   - th:each: 반복문 처리
+   - sec:authorize / sec:authentication: 시큐리티 권한별 화면 제어 및 사용자 정보 출력
+3. 예외 및 에러 처리
+   - ResponseEntity: HTTP 상태 코드와 응답 본문을 함께 제어하는 객체
+   - IllegalArgumentException: 잘못된 인자 전달 시 발생하는 예외 처리 및 400 Bad Request 반환
