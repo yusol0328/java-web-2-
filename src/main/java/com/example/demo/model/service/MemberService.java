@@ -15,12 +15,19 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Optional;
 
+import com.example.demo.model.repository.PostRepository;
+import com.example.demo.model.repository.CommentRepository;
+
 @Service // 서비스 등록
 public class MemberService implements UserDetailsService {
     @Autowired
     private MemberRepository memberRepository;
     @Autowired // SecurityConfig 에 등록한 BCryptPasswordEncoder 주입
     private PasswordEncoder passwordEncoder;
+    @Autowired // ① 필드 추가
+    private PostRepository postRepository;
+    @Autowired
+    private CommentRepository commentRepository;
 
     public Member signup(MemberForm form) { // 회원가입
         
@@ -90,8 +97,9 @@ public class MemberService implements UserDetailsService {
     public void deleteMember(Long id) { // 회원 삭제
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다."));
-        if (member.getUsername().equals(currentUsername())) { // 본인이면 거부
-            throw new IllegalArgumentException("자기 자신의 계정은 삭제할 수 없습니다.");
+        checkNotMe(member); // [6주차 연습문제 1]
+        if (postRepository.existsByAuthor(member) || commentRepository.existsByAuthor(member)) {
+            throw new IllegalArgumentException("작성한 글이나 댓글이 있는 회원은 삭제할 수 없습니다.");
         }
         memberRepository.delete(member); // DELETE
     }
@@ -108,7 +116,16 @@ public class MemberService implements UserDetailsService {
         return memberRepository.findByUsernameContainingOrNameContaining(keyword, keyword);
     }
 
-    
+    //임시 추가 메서드 (cheackNotMe 빨간줄 해결) 
+    private void checkNotMe(Member targetMember) {
+        // 현재 로그인한 사용자의 username(아이디) 가져오기
+        String loginUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        // 대상 회원의 아이디와 로그인한 아이디가 같다면 예외 발생
+        if (targetMember.getUsername().equals(loginUsername)) {
+            throw new IllegalArgumentException("자기 자신의 권한을 변경하거나 탈퇴시킬 수 없습니다.");
+        }
+    }
 
 }
 
